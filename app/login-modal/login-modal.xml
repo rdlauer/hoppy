@@ -1,0 +1,9 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" class="page" actionBarHidden="true"  showingModally="onShowingModally">
+
+<StackLayout>
+	
+	<WebView height="100%" loaded="onWebViewLoaded" id="myWebView" src="https://untappd.com/oauth/authenticate/?client_id=9DF35128D10D08B4BB6304F1927B33495068FB4C&response_type=token&redirect_url=https://hoppyapp.com/auth.html" />
+	
+</StackLayout>
+
+</Page>

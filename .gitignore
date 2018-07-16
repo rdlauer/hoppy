@@ -1,0 +1,10 @@
+.vscode/
+platforms/
+node_modules
+app/**/*.js
+app/**/*.map
+npm-debug.log
+app/keys.*
+hooks/
+app/**/google-services.json
+app/**/GoogleService-Info.plist

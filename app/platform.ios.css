@@ -1,0 +1,20 @@
+.start-page {
+	background-size: contain;
+	/* background-size: 470 300; */
+}
+
+.start-heading {
+	margin-top: 10;
+}
+
+.start-text {
+	margin-top: 240;
+}
+
+.start-text-options {
+	margin-top: 30;
+}
+
+Label.fa-icon {
+	padding-top: 24;
+}

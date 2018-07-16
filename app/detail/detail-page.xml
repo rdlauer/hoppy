@@ -1,0 +1,41 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page" xmlns:circProgAbv="cp-bar-abv" xmlns:circProgIbu="cp-bar-ibu">
+
+<ActionBar class="action-bar ab-green">
+	<NavigationButton visibility="collapse" />
+	<iOS>
+		<ActionItem tap="goBack" ios.position="left">
+			<Label text="&#xf359;" class="fa-solid ab-item" />
+		</ActionItem>
+	</iOS>
+	<Label class="action-bar-title" text="{{ name }}" class="ab-text" />
+</ActionBar>
+
+<ScrollView>
+<StackLayout class="m-20">
+	<StackLayout orientation="horizontal">
+		<Image src="{{ image }}" width="120" class="thumb img-rounded" />
+		<StackLayout class="m-l-15">
+			<Label text="{{ name }}" class="detail-heading m-t-10" textWrap="true" />
+			<Label text="{{ brewery }}" class="detail-text m-t-5" textWrap="true"  />
+			<Label text="{{ style }}" class="detail-text m-t-5" textWrap="true"  />
+		</StackLayout>
+	</StackLayout>
+	<StackLayout orientation="horizontal" horizontalAlignment="center" class="m-t-25">
+		<StackLayout class="{{ score_img_1 }}"></StackLayout>
+		<StackLayout class="{{ score_img_2 }}"></StackLayout>
+		<StackLayout class="{{ score_img_3 }}"></StackLayout>
+		<StackLayout class="{{ score_img_4 }}"></StackLayout>
+		<StackLayout class="{{ score_img_5 }}"></StackLayout>
+		<Label text="{{ score }}" class="detail-heading bold m-l-10" />
+		<Label text=" Avg" class="detail-text" />
+	</StackLayout>
+	<Label text="{{ desc }}" class="detail-desc m-t-25" textWrap="true" />
+	<StackLayout orientation="horizontal" horizontalAlignment="center" class="m-t-25 m-b-20">
+		<circProgAbv:CircularProgressView id="cpAbv" />
+		<circProgIbu:CircularProgressView id="cpIbu" class="m-l-20" />
+	</StackLayout>
+	<Button text="Open in Untappd" class="btn btn-primary btn-active custom-font" tap="openUntappd" />
+</StackLayout>
+</ScrollView>
+
+</Page>

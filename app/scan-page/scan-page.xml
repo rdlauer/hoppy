@@ -1,0 +1,59 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatedTo="navigatedTo" class="page" xmlns:FirebaseMLKitTextRecognition="nativescript-plugin-firebase/mlkit/textrecognition" xmlns:FirebaseMLKitBarcodeScanning="nativescript-plugin-firebase/mlkit/barcodescanning">
+
+	<ActionBar class="action-bar ab-green">
+		<NavigationButton visibility="collapse" />
+		<iOS>
+			<ActionItem tap="goBack" position="left">
+				<Label text="&#xf359;" class="fa-solid ab-item" />
+			</ActionItem>
+		</iOS>
+		<Android>
+			<NavigationButton text="back" android.systemIcon = "ic_menu_back" tap="goBack" />
+		</Android>
+		<Label class="action-bar-title" text="Scan Beer Barcode" class="ab-text" />
+	</ActionBar>
+
+	<GridLayout>
+
+		<!-- <FirebaseMLKitTextRecognition:MLKitTextRecognition
+			class="my-class"
+			width="100%"
+			height="100%"
+			processEveryNthFrame="100"
+			scanResult="onTextRecognitionResult" /> -->
+
+		<FirebaseMLKitBarcodeScanning:MLKitBarcodeScanner
+			width="100%"
+			height="100%"
+			formats="UPC_A, UPC_E, EAN_13"
+			android:processEveryNthFrame="10"
+			ios:processEveryNthFrame="10"
+			scanResult="onBarcodeScanningResult" />
+
+		<GridLayout rows="*, 320, *" columns="*, 5/6*, *">
+			<Label class="mask" row="0" col="0" colSpan="3"></Label>
+			<Label class="mask" row="2" col="0" colSpan="3"></Label>
+			<Label class="mask" row="1" col="0"></Label>
+			<Label class="mask" row="1" col="2"></Label>
+			<GridLayout row="1" col="1" rows="1/6*, *, 1/6*" columns="1/6*, *, 1/6*">
+				<Label class="frame-top-left" row="0" col="0"></Label>
+				<Label class="frame-top-right" row="0" col="2"></Label>
+				<Label class="frame-bottom-left" row="2" col="0"></Label>
+				<Label class="frame-bottom-right" row="2" col="2"></Label>
+				<StackLayout class="swing" row="0" col="0" colSpan="3">
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.1)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.2)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.3)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.4)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.5)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.6)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.7)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.8)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 0.9)"></Label>
+					<Label height="1" marginBottom="1" borderBottomWidth="1" borderColor="rgba(98, 151, 64, 1)"></Label>
+				</StackLayout>
+			</GridLayout>
+		</GridLayout>
+	</GridLayout>
+
+</Page>

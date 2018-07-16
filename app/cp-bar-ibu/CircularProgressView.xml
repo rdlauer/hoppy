@@ -1,0 +1,31 @@
+<GridLayout loaded="onLoaded" height="140" width="140" xmlns:gauge="nativescript-ui-gauge">
+		<gauge:RadRadialGauge>
+			<gauge:RadRadialGauge.scales>
+				<gauge:RadialScale startAngle="-90" sweepAngle="360">
+					<gauge:RadialScale.scaleStyle>
+						<gauge:ScaleStyle ticksVisible="false" labelsVisible="false" lineThickness="0">
+						</gauge:ScaleStyle>
+					</gauge:RadialScale.scaleStyle>
+
+					<gauge:RadialScale.indicators>
+						<gauge:RadialBarIndicator minimum="0" maximum="70">
+							<gauge:RadialBarIndicator.indicatorStyle>
+								<gauge:BarIndicatorStyle fillColor="{{ fillBackgroundColor }}" cap="Round" barWidth="0.1">
+								</gauge:BarIndicatorStyle>
+							</gauge:RadialBarIndicator.indicatorStyle>
+						</gauge:RadialBarIndicator>
+					</gauge:RadialScale.indicators>
+
+					<gauge:RadialScale.indicators>
+						<gauge:RadialBarIndicator minimum="0" maximum="{{ progress }}" isAnimated="true">
+							<gauge:RadialBarIndicator.indicatorStyle>
+								<gauge:BarIndicatorStyle fillColor="#629740" cap="Round" barWidth="0.15">
+								</gauge:BarIndicatorStyle>
+							</gauge:RadialBarIndicator.indicatorStyle>
+						</gauge:RadialBarIndicator>
+					</gauge:RadialScale.indicators> 
+				</gauge:RadialScale>
+			</gauge:RadRadialGauge.scales>
+		</gauge:RadRadialGauge>
+		<Label text="{{ text }}" color="black" fontSize="{{ textSize }}" class="m-x-auto m-y-auto" marginTop="{{ offset }}"></Label>
+	</GridLayout>

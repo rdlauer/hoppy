@@ -1,0 +1,197 @@
+﻿@import '~nativescript-theme-core/css/core.light.css';
+@import 'platform.css';
+Label, .custom-font {
+	font-family: Lato, Lato-Regular;
+}
+
+.start-page {
+	background-color: #629740;
+	background-image: url("~/images/beer-new-lg.jpg");
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
+.start-page-no-img {
+	background-color: #629740;
+}
+
+.start-heading {
+	color: white;
+	font-size: 42;
+	font-weight: bold;
+	text-align: center;
+}
+
+.start-text {
+	color: white;
+	font-size: 24;
+	text-align: center;
+}
+
+.start-text-options {
+	color: white;
+	font-size: 24;
+	text-align: center;
+}
+
+.start-text-login {
+	color: white;
+	font-size: 20;
+	text-align: center;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+Label.fa-icon {
+	font-size: 80;
+	margin: 30;
+	font-weight: 800;
+	border-radius: 80;
+	border-width: 7;
+	border-color: #fff;
+	width: 160;
+	height: 160;
+	background-color: rgba(255, 255, 255, 190);
+	vertical-align: center;
+	color: white;
+	text-align: center;
+}
+
+.fa {
+	font-family: "Font Awesome 5 Free", "fa-regular-400", "fa-solid-900";
+}
+
+.fa-solid {
+	font-family: "Font Awesome 5 Free", "fa-solid-900";
+}
+
+.ab-green {
+	background-color: #629740;
+}
+
+.ab-text {
+	color: white;
+	font-size: 20;
+	font-weight: bold;
+}
+
+.list-group, .list-group-item {
+	background-color: #ffffff;
+}
+
+.list-group-item-heading {
+	font-size: 16;
+}
+
+.list-group-item-text {
+	font-size: 14;
+}
+
+.list-avg {
+	margin-top: -4;
+}
+
+.detail-heading {
+	font-size: 22;
+}
+
+.detail-text {
+	font-size: 16;
+	color: slategray;
+}
+
+.detail-desc {
+	font-size: 18;
+}
+
+.rating-list {
+	height: 15;
+	width: 15;
+}
+
+.rating-detail {
+	height: 30;
+	width: 30;
+}
+
+.rating-0 {
+	background-image: url("~/images/rating-0.png");
+	background-size: contain;
+}
+
+.rating-1 {
+	background-image: url("~/images/rating-1.png");
+	background-size: contain;
+}
+
+.rating-2 {
+	background-image: url("~/images/rating-2.png");
+	background-size: contain;
+}
+
+.rating-3 {
+	background-image: url("~/images/rating-3.png");
+	background-size: contain;
+}
+
+.ab-item {
+	color: white;
+	font-size: 24;
+}
+
+.btn-primary {
+	background-color: #629740;
+	color: white;
+	font-size: 24;
+}
+
+/* scanning-specific css */
+
+.mask {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.frame-top-left {
+	border-top-width: 3;
+	border-left-width: 3;
+	border-color: #629740;
+}
+
+.frame-top-right {
+	border-top-width: 3;
+	border-right-width: 3;
+	border-color: #629740;
+}
+
+.frame-bottom-left {
+	border-bottom-width: 3;
+	border-left-width: 3;
+	border-color: #629740;
+}
+
+.frame-bottom-right {
+	border-bottom-width: 3;
+	border-right-width: 3;
+	border-color: #629740;
+}
+
+.swing {
+	animation-name: swingAnimation;
+	animation-duration: 6s;
+	animation-iteration-count: 10;
+	animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
+}
+
+@keyframes swingAnimation {
+	0% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(0, 300);
+	}
+	100% {
+		transform: translate(0, 0);
+	}
+}

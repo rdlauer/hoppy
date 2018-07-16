@@ -1,0 +1,15 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page start-page-no-img">
+
+<ActionBar class="action-bar ab-green">
+	<NavigationButton visibility="collapse" />
+	<Label class="action-bar-title" text="Hoppy" class="ab-text" />
+</ActionBar>
+
+<StackLayout>
+	<Label text="Snap a pic of a drink menu" textWrap="true" class="start-text-options" />
+	<Label text="&#xf030;" class="fa-solid fa-icon m-t-20" tap="onTapMenu" />
+	<Label text="Scan a beer barcode" textWrap="true" class="start-text-options" />
+	<Label text="&#xf02a;" class="fa-solid fa-icon m-t-20" tap="onTapScan" />
+</StackLayout>
+
+</Page>

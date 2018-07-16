@@ -1,0 +1,12 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" class="page start-page" loaded="pageLoaded" actionBarHidden="true">
+
+<StackLayout>
+	
+	<Label text="HOPPY" class="start-heading" />
+	<Label text="Snap a pic of a drink menu and Hoppy will provide you Untappd ratings for each beer" textWrap="true" class="start-text" />
+	<Label text="&#xf2f6;" class="fa-solid fa-icon m-t-20" tap="openBrowser" />
+	<Label text="Get started by logging into Untappd" class="start-text-login" />
+	
+</StackLayout>
+
+</Page>

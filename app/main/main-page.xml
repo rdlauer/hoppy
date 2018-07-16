@@ -1,0 +1,47 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatedTo="navigatedTo" class="page" xmlns:circularProgress="cp-bar">
+
+<ActionBar class="action-bar ab-green">
+	<iOS>
+		<ActionItem tap="goBack" ios.position="left">
+			<Label text="&#xf359;" class="fa-solid ab-item" />
+		</ActionItem>
+	</iOS>
+	<Android>
+		<NavigationButton text="back" android.systemIcon = "ic_menu_back" tap="goBack" />
+	</Android>
+	<Label class="action-bar-title" text="Your Beer List" class="ab-text" />
+	<ActionItem tap="takePicture" ios.position="right">
+		<Label text="&#xf030;" ios:class="fa-solid ab-item" android:class="fa-solid ab-item p-r-10" />
+	</ActionItem>
+</ActionBar>
+
+<StackLayout>
+	<circularProgress:CircularProgressView id="cp1" class="m-t-30" visibility="collapse" />
+	<ListView items="{{ myBeers }}" class="list-group" height="100%" separatorColor="transparent" itemTap="beerTap">
+		<ListView.itemTemplate>
+			<GridLayout class="list-group-item" rows="auto" columns="auto, *, auto">
+				<Image row="0" col="0" src="{{ image }}" class="thumb img-rounded" />
+				<StackLayout row="0" col="1" >
+					<Label text="{{ name }}" class="list-group-item-heading" />
+					<Label text="{{ brewery }}" class="list-group-item-text" />
+					<Label text="{{ style }}" class="list-group-item-text" />
+				</StackLayout>
+				<StackLayout row="0" col="2">
+					<StackLayout orientation="horizontal">
+						<Label text="{{ score }}" class="list-group-item-heading bold" />
+						<Label text=" Avg" class="list-group-item-text list-avg" />
+					</StackLayout>
+					<StackLayout orientation="horizontal">
+						<StackLayout class="{{ score_img_1 }}"></StackLayout>
+						<StackLayout class="{{ score_img_2 }}"></StackLayout>
+						<StackLayout class="{{ score_img_3 }}"></StackLayout>
+						<StackLayout class="{{ score_img_4 }}"></StackLayout>
+						<StackLayout class="{{ score_img_5 }}"></StackLayout>
+					</StackLayout>
+				</StackLayout>
+			</GridLayout>
+		</ListView.itemTemplate>
+	</ListView>
+</StackLayout>
+
+</Page>
