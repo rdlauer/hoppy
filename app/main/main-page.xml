@@ -2,6 +2,7 @@
 
 <ActionBar class="action-bar ab-green">
 	<iOS>
+		<NavigationButton visibility="collapse" />
 		<ActionItem tap="goBack" ios.position="left">
 			<Label text="&#xf359;" class="fa-solid ab-item" />
 		</ActionItem>
