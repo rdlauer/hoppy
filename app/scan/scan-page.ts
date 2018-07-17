@@ -14,7 +14,7 @@ let scanCount = 0;
 export function navigatedTo() {
   scanCount = 0;
   // android back button hack
-  appSettings.setString('pageSource', './scan-page/scan-page');
+  appSettings.setString('pageSource', './scan/scan-page');
 }
 
 export function goBack(args: any) {

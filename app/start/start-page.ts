@@ -22,7 +22,7 @@ export function onTapMenu(args: any) {
 
 export function onTapScan(args: any) {
   var navigationOptions = {
-    moduleName: './scan-page/scan-page',
+    moduleName: './scan/scan-page',
     transition: {
       name: 'slideTop'
     }

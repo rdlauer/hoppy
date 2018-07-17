@@ -1,6 +1,6 @@
 ﻿import './bundle-config';
 import * as application from 'application';
-import firebase = require('nativescript-plugin-firebase');
+import * as firebase from 'nativescript-plugin-firebase';
 import * as frameModule from 'ui/frame';
 
 firebase
