@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatedTo="navigatedTo" class="page" xmlns:FirebaseMLKitTextRecognition="nativescript-plugin-firebase/mlkit/textrecognition" xmlns:FirebaseMLKitBarcodeScanning="nativescript-plugin-firebase/mlkit/barcodescanning">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatedTo="navigatedTo" loaded="pageLoaded" class="page" xmlns:FirebaseMLKitTextRecognition="nativescript-plugin-firebase/mlkit/textrecognition" xmlns:FirebaseMLKitBarcodeScanning="nativescript-plugin-firebase/mlkit/barcodescanning">
 
 	<ActionBar class="action-bar ab-green">
 		<NavigationButton visibility="collapse" />
@@ -23,11 +23,13 @@
 			scanResult="onTextRecognitionResult" /> -->
 
 		<FirebaseMLKitBarcodeScanning:MLKitBarcodeScanner
+			id="scanner"
 			width="100%"
 			height="100%"
 			formats="UPC_A, UPC_E, EAN_13"
 			android:processEveryNthFrame="10"
 			ios:processEveryNthFrame="10"
+			torchOn="false"
 			scanResult="onBarcodeScanningResult" />
 
 		<GridLayout rows="*, 320, *" columns="*, 5/6*, *">
@@ -54,6 +56,12 @@
 				</StackLayout>
 			</GridLayout>
 		</GridLayout>
+
+		<GridLayout rows="auto" columns="auto, auto" horizontalAlignment="center" class="m-t-10">
+			<Label text="Flashlight:" class="ml-option m-r-5" row="0" col="0" />
+			<Switch onTap="toggleFlashlight" row="0" col="1" id="flashlight" />
+		</GridLayout>
+
 	</GridLayout>
 
 </Page>

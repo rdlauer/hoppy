@@ -78,6 +78,12 @@ Label.fa-icon {
 	font-weight: bold;
 }
 
+.ml-option {
+	color: white;
+	font-size: 18;
+	font-weight: bold;
+}
+
 .list-group, .list-group-item {
 	background-color: #ffffff;
 }

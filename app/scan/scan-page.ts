@@ -1,5 +1,7 @@
 import * as frameModule from 'ui/frame';
 import * as http from 'http';
+import { EventData } from 'tns-core-modules/data/observable';
+import { Page } from 'ui/page';
 import * as firebase from 'nativescript-plugin-firebase';
 const appSettings = require('application-settings');
 const keys = require('../keys');
@@ -10,6 +12,13 @@ const keys = require('../keys');
 // import { MLKitScanBarcodesOnDeviceResult } from 'nativescript-plugin-firebase/mlkit/barcodescanning';
 
 let scanCount = 0;
+let page, scanner, flashlight;
+
+export function pageLoaded(args: EventData) {
+  page = <Page>args.object;
+  scanner = page.getViewById('scanner');
+  flashlight = page.getViewById('flashlight');
+}
 
 export function navigatedTo() {
   scanCount = 0;
@@ -17,7 +26,18 @@ export function navigatedTo() {
   appSettings.setString('pageSource', './scan/scan-page');
 }
 
+export function toggleFlashlight() {
+  if (!flashlight.checked) {
+    scanner.torchOn = true;
+  } else {
+    scanner.torchOn = false;
+  }
+}
+
 export function goBack(args: any) {
+  scanner.torchOn = false;
+  flashlight.checked = false;
+
   let navigationOptions = {
     moduleName: './start/start-page',
     transition: {
@@ -74,10 +94,16 @@ export function onBarcodeScanningResult(scanResult: any) {
           }
         };
 
+        scanner.torchOn = false;
+        flashlight.checked = false;
+
         frameModule.topmost().navigate(navigationOptions);
       },
       function(error) {
         //console.error('ERROR: ' + error);
+        scanner.torchOn = false;
+        flashlight.checked = false;
+
         firebase.sendCrashLog({
           message: 'Error with UPC scanning: ' + error,
           showInConsole: true
