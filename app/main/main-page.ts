@@ -4,6 +4,10 @@ import * as camera from 'nativescript-camera';
 import * as http from 'http';
 //import { isIOS, isAndroid } from 'tns-core-modules/platform';
 import * as frameModule from 'ui/frame';
+import {
+  connectionType,
+  getConnectionType
+} from 'tns-core-modules/connectivity';
 const imageSourceModule = require('tns-core-modules/image-source');
 const firebase = require('nativescript-plugin-firebase');
 const observableModule = require('tns-core-modules/data/observable');
@@ -12,7 +16,7 @@ const appSettings = require('application-settings');
 const keys = require('../keys');
 const vm = new observableModule.Observable();
 
-let page, prgsInterval, cp1;
+let page, prgsInterval, cp1, skeleton;
 let prgs = 0;
 let beerArray = new observableArrayModule.ObservableArray([]);
 let token = appSettings.getString('untappdToken');
@@ -20,10 +24,14 @@ let token = appSettings.getString('untappdToken');
 export function navigatedTo(args: EventData) {
   page = <Page>args.object;
   cp1 = page.getViewById('cp1');
+  skeleton = page.getViewById('skeleton');
   page.bindingContext = vm;
 
   // android back hack
   appSettings.setString('pageSource', './main/main-page');
+
+  // check to make sure we have a valid network connection
+  checkNetwork();
 
   // hack to only automatically display camera the first time this view is shown
   let showCamera = appSettings.getString('showCamera');
@@ -43,6 +51,7 @@ function startProgress() {
 function stopProgress() {
   clearInterval(prgsInterval);
   cp1.visibility = 'collapse';
+  skeleton.visibility = 'collapse';
 }
 
 function checkBeerLength(beer) {
@@ -101,6 +110,7 @@ export function takePicture() {
       .then(imageAsset => {
         // set up the progress circle
         cp1.visibility = 'visible';
+        skeleton.visibility = 'visible';
         prgs = 0;
         beerArray = [];
         prgsInterval = setInterval(startProgress, 50);
@@ -229,4 +239,36 @@ function showNoBeerAlert() {
     okButtonText: 'OK',
     cancelable: false
   });
+}
+
+function checkNetwork() {
+  // result is ConnectionType enumeration (none, wifi or mobile)
+  const myConnectionType = getConnectionType();
+
+  switch (myConnectionType) {
+    case connectionType.none:
+      // Denotes no Internet connection.
+      //console.log('No connection');
+      alert({
+        title: 'No Internet',
+        message: 'Sorry, but you need an active network connection!',
+        okButtonText: 'OK',
+        cancelable: false
+      });
+      break;
+    case connectionType.wifi:
+      // Denotes a WiFi connection.
+      //console.log('WiFi connection');
+      break;
+    case connectionType.mobile:
+      // Denotes a mobile connection, i.e. cellular network or WAN.
+      //console.log('Mobile connection');
+      break;
+    case connectionType.ethernet:
+      // Denotes a ethernet connection.
+      //console.log('Ethernet connection');
+      break;
+    default:
+      break;
+  }
 }

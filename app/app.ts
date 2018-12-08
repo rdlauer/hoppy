@@ -13,7 +13,7 @@ firebase
       console.log('firebase.init done');
     },
     error => {
-      //console.log(`firebase.init error: ${error}`);
+      console.log(`firebase.init error: ${error}`);
       firebase.sendCrashLog({
         message: `Error initializing firebase: ${error}`,
         showInConsole: true
