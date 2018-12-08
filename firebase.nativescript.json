@@ -1,6 +1,7 @@
 {
     "using_ios": true,
     "using_android": true,
+    "authentication": false,
     "firestore": false,
     "realtimedb": false,
     "remote_config": false,
