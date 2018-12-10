@@ -36,7 +36,7 @@
 			android:theme="@style/LaunchScreenTheme">
 
 			<meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />
-			<meta-data android:name="com.google.firebase.ml.vision.DEPENDENCIES" android:value="text,barcode" />
+			<meta-data android:name="com.google.firebase.ml.vision.DEPENDENCIES" android:value="ocr,barcode" />
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
