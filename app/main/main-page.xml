@@ -18,7 +18,7 @@
 
 <StackLayout>
 	<circularProgress:CircularProgressView id="cp1" class="m-t-30" visibility="collapse" />
-	<Image id="skeleton" src="~/images/skeleton.png" visibility="collapse" width="100%" />
+	<Image id="skeleton" src="~/images/skeleton.png" visibility="collapse" stretch="aspectFill" />
 	<ListView items="{{ myBeers }}" class="list-group" height="100%" separatorColor="transparent" itemTap="beerTap">
 		<ListView.itemTemplate>
 			<GridLayout class="list-group-item" rows="auto" columns="auto, *, auto">
