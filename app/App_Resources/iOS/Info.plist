@@ -51,5 +51,9 @@
 	<array>
 		<string>untappd</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Hoppy lets you use your camera to upload pictures of beer menus for analysis!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Hoppy lets you choose to upload pictures of beer menus from your photo library for analysis!</string>
 </dict>
 </plist>
