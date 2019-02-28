@@ -11,7 +11,7 @@
 		<NavigationButton text="back" android.systemIcon = "ic_menu_back" tap="goBack" />
 	</Android>
 	<Label class="action-bar-title" text="Your Beer List" class="ab-text" />
-	<ActionItem tap="takePicture" ios.position="right">
+	<ActionItem tap="showActionSheet" ios.position="right">
 		<Label text="&#xf030;" ios:class="fa-solid ab-item" android:class="fa-solid ab-item p-r-10" />
 	</ActionItem>
 </ActionBar>

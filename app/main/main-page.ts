@@ -1,6 +1,8 @@
 import { EventData } from 'data/observable';
 import { Page } from 'ui/page';
 import * as camera from 'nativescript-camera';
+import * as dialogs from 'tns-core-modules/ui/dialogs';
+import * as imagepicker from 'nativescript-imagepicker';
 import * as http from 'http';
 //import { isIOS, isAndroid } from 'tns-core-modules/platform';
 import * as frameModule from 'ui/frame';
@@ -37,7 +39,7 @@ export function navigatedTo(args: EventData) {
   let showCamera = appSettings.getString('showCamera');
 
   if (showCamera && showCamera == 'yes') {
-    takePicture();
+    showActionSheet();
     appSettings.setString('showCamera', 'no');
   }
 }
@@ -101,6 +103,50 @@ export function beerTap(args: any) {
   frameModule.topmost().navigate(navigationOptions);
 }
 
+export function showActionSheet() {
+  dialogs
+    .action({
+      message: 'Choose a source for your photo:',
+      cancelButtonText: 'Cancel',
+      actions: ['Camera', 'Photos']
+    })
+    .then(result => {
+      //console.log("Dialog result: " + result);
+      if (result == 'Camera') {
+        takePicture();
+      } else if (result == 'Photos') {
+        takeGallery();
+      }
+    });
+}
+
+export function takeGallery() {
+  let context = imagepicker.create({
+    mode: 'single' // use "multiple" for multiple selection
+  });
+
+  context
+    .authorize()
+    .then(function() {
+      return context.present();
+    })
+    .then(function(selection) {
+      // selection.forEach(function(selected) {
+      //     // process the selected image
+      // });
+      //list.items = selection;
+      analyzePicture(selection[0]);
+    })
+    .catch(function(err) {
+      alert({
+        title: 'Photo Issue!',
+        message: err.message,
+        okButtonText: 'OK',
+        cancelable: false
+      });
+    });
+}
+
 export function takePicture() {
   camera.requestPermissions().then(() => {
     camera
@@ -108,112 +154,113 @@ export function takePicture() {
         saveToGallery: false
       })
       .then(imageAsset => {
-        // set up the progress circle
-        cp1.visibility = 'visible';
-        skeleton.visibility = 'visible';
-        prgs = 0;
-        beerArray = [];
-        prgsInterval = setInterval(startProgress, 50);
-
-        const source = new imageSourceModule.ImageSource();
-        source.fromAsset(imageAsset).then(imageSource => {
-          firebase.mlkit.textrecognition
-            .recognizeTextCloud({
-              image: imageSource,
-              modelType: 'latest', // either "latest" or "stable" (default "stable")
-              maxResults: 25 // default 10
-            })
-            .then(function(result) {
-              // filter out prices, text between parens, text between brackets
-              let filtered = result.text.replace(
-                /(\$[0-9]+(\.[0-9]{2})?)/g,
-                ''
-              );
-              filtered = filtered
-                .replace(/ *\([^)]*\) */g, '')
-                .replace(/ *\[[^\]]*]/g, '')
-                .trim();
-
-              // create array of text from firebase
-              let beers = filtered.split('\n').filter(checkBeerLength);
-
-              if (beers.length == 0) {
-                showNoBeerAlert();
-              }
-
-              for (let i = 0; i < beers.length; i++) {
-                //if (beers[i].trim().length > 10 && beers[i].trim().length < 50) {
-                let url =
-                  keys.searchUrl +
-                  '?query=' +
-                  encodeURIComponent(beers[i].trim().replace(/ /g, '%20')) +
-                  '&access_token=' +
-                  token +
-                  '&test=' +
-                  keys.test;
-
-                http.getJSON(url).then(
-                  function(u: any) {
-                    if (u.id && u.id != 0) {
-                      beerArray.push({
-                        id: u.id,
-                        name: u.name,
-                        score: u.score,
-                        image: u.image,
-                        image_lg: u.image_lg,
-                        brewery: u.brewery,
-                        style: u.style,
-                        desc: u.desc,
-                        abv: u.abv,
-                        ibu: u.ibu,
-                        count: u.score_count,
-                        score_img_1: 'rating-list ' + u.score_img_1,
-                        score_img_2: 'rating-list ' + u.score_img_2,
-                        score_img_3: 'rating-list ' + u.score_img_3,
-                        score_img_4: 'rating-list ' + u.score_img_4,
-                        score_img_5: 'rating-list ' + u.score_img_5
-                      });
-                    }
-                    // add the completed array to the viewmodel
-                    if (i == beers.length - 1) {
-                      vm.set('myBeers', beerArray);
-                      stopProgress();
-
-                      if (beerArray.length == 0) {
-                        showNoBeerAlert();
-                      }
-                    }
-                  },
-                  function(error) {
-                    //console.log('ERROR: ' + error);
-                    firebase.sendCrashLog({
-                      message: 'Error with Hoppy/Untappd API: ' + error,
-                      showInConsole: true
-                    });
-                  }
-                );
-                //}
-              }
-            })
-            .catch(function(errorMessage) {
-              //console.log('MLKIT ERROR: ' + errorMessage);
-              firebase.sendCrashLog({
-                message: 'Error with ML Kit: ' + errorMessage,
-                showInConsole: true
-              });
-              alert({
-                title: 'Error!',
-                message: 'Sorry, but we ran into a little problem...',
-                okButtonText: 'OK',
-                cancelable: false
-              });
-            });
-        });
+        analyzePicture(imageAsset);
       })
       .catch(function(err) {
         alert({
           title: 'Camera Issue!',
           message: err.message,
+          okButtonText: 'OK',
+          cancelable: false
+        });
+      });
+  });
+}
+
+function analyzePicture(imageAsset) {
+  // set up the progress circle
+  cp1.visibility = 'visible';
+  skeleton.visibility = 'visible';
+  prgs = 0;
+  beerArray = [];
+  prgsInterval = setInterval(startProgress, 50);
+
+  const source = new imageSourceModule.ImageSource();
+  source.fromAsset(imageAsset).then(imageSource => {
+    firebase.mlkit.textrecognition
+      .recognizeTextCloud({
+        image: imageSource,
+        modelType: 'latest', // either "latest" or "stable" (default "stable")
+        maxResults: 25 // default 10
+      })
+      .then(function(result) {
+        // filter out prices, text between parens, text between brackets
+        let filtered = result.text.replace(/(\$[0-9]+(\.[0-9]{2})?)/g, '');
+        filtered = filtered
+          .replace(/ *\([^)]*\) */g, '')
+          .replace(/ *\[[^\]]*]/g, '')
+          .trim();
+
+        // create array of text from firebase
+        let beers = filtered.split('\n').filter(checkBeerLength);
+
+        if (beers.length == 0) {
+          showNoBeerAlert();
+        }
+
+        for (let i = 0; i < beers.length; i++) {
+          //if (beers[i].trim().length > 10 && beers[i].trim().length < 50) {
+          let url =
+            keys.searchUrl +
+            '?query=' +
+            encodeURIComponent(beers[i].trim().replace(/ /g, '%20')) +
+            '&access_token=' +
+            token +
+            '&test=' +
+            keys.test;
+
+          http.getJSON(url).then(
+            function(u: any) {
+              if (u.id && u.id != 0) {
+                beerArray.push({
+                  id: u.id,
+                  name: u.name,
+                  score: u.score,
+                  image: u.image,
+                  image_lg: u.image_lg,
+                  brewery: u.brewery,
+                  style: u.style,
+                  desc: u.desc,
+                  abv: u.abv,
+                  ibu: u.ibu,
+                  count: u.score_count,
+                  score_img_1: 'rating-list ' + u.score_img_1,
+                  score_img_2: 'rating-list ' + u.score_img_2,
+                  score_img_3: 'rating-list ' + u.score_img_3,
+                  score_img_4: 'rating-list ' + u.score_img_4,
+                  score_img_5: 'rating-list ' + u.score_img_5
+                });
+              }
+              // add the completed array to the viewmodel
+              if (i == beers.length - 1) {
+                vm.set('myBeers', beerArray);
+                stopProgress();
+
+                if (beerArray.length == 0) {
+                  showNoBeerAlert();
+                }
+              }
+            },
+            function(error) {
+              //console.log('ERROR: ' + error);
+              firebase.sendCrashLog({
+                message: 'Error with Hoppy/Untappd API: ' + error,
+                showInConsole: true
+              });
+            }
+          );
+          //}
+        }
+      })
+      .catch(function(errorMessage) {
+        //console.log('MLKIT ERROR: ' + errorMessage);
+        firebase.sendCrashLog({
+          message: 'Error with ML Kit: ' + errorMessage,
+          showInConsole: true
+        });
+        alert({
+          title: 'Error!',
+          message: 'Sorry, but we ran into a little problem...',
           okButtonText: 'OK',
           cancelable: false
         });
