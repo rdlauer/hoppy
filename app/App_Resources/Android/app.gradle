@@ -5,15 +5,38 @@
 //	compile 'com.android.support:recyclerview-v7:+'
 //}
 
-android {  
-  defaultConfig {  
+// this is the original config:
+// android {  
+//   defaultConfig {  
+//     generatedDensities = []
+//     applicationId = "org.nativescript.hoppy"  
+//   }  
+//   aaptOptions {  
+//     additionalParameters "--no-version-vectors"  
+//   }  
+// } 
+
+// this is referenced by nathanael in this github issue:
+// https://github.com/NativeScript/nativescript-cli/issues/4330#issuecomment-523993414
+android {
+  defaultConfig {
     generatedDensities = []
-    applicationId = "org.nativescript.hoppy"  
-  }  
-  aaptOptions {  
-    additionalParameters "--no-version-vectors"  
-  }  
-} 
+    ndk {
+      abiFilters.clear()
+      abiFilters.addAll(['armeabi-v7a','arm64-v8a'])
+    }
+  }    
+  buildTypes {
+    debug {
+      ndk {
+        abiFilters 'x86'
+      }
+    }
+  }
+  aaptOptions {
+    additionalParameters "--no-version-vectors"
+  }
+}
 
 def settingsGradlePath
 

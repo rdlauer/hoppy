@@ -14,7 +14,7 @@ firebase
     },
     error => {
       console.log(`firebase.init error: ${error}`);
-      firebase.sendCrashLog({
+      firebase.crashlytics.sendCrashLog({
         message: `Error initializing firebase: ${error}`,
         showInConsole: true
       });
@@ -24,19 +24,12 @@ firebase
 // android back button hack
 
 if (application.android) {
-  application.android.on(
-    application.AndroidApplication.activityBackPressedEvent,
-    backEvent
-  );
+  application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
 }
 
 function backEvent(args) {
   let currentPage: any = frameModule.topmost().currentPage;
-  if (
-    currentPage &&
-    currentPage.exports &&
-    typeof currentPage.exports.backEvent === 'function'
-  ) {
+  if (currentPage && currentPage.exports && typeof currentPage.exports.backEvent === 'function') {
     currentPage.exports.backEvent(args);
   }
 }

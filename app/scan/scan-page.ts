@@ -104,7 +104,7 @@ export function onBarcodeScanningResult(scanResult: any) {
         scanner.torchOn = false;
         flashlight.checked = false;
 
-        firebase.sendCrashLog({
+        firebase.crashlytics.sendCrashLog({
           message: 'Error with UPC scanning: ' + error,
           showInConsole: true
         });

@@ -24,10 +24,7 @@ export function onWebViewLoaded(webargs) {
     if (!args.error) {
       if (args.url.includes('#access_token')) {
         // successful auth!
-        let token = args.url.replace(
-          'https://hoppyapp.com/auth.html#access_token=',
-          ''
-        );
+        let token = args.url.replace('https://hoppyapp.com/auth.html#access_token=', '');
 
         appSettings.setString('untappdToken', token);
 
@@ -43,7 +40,7 @@ export function onWebViewLoaded(webargs) {
       }
     } else {
       //console.log(args.error);
-      firebase.sendCrashLog({
+      firebase.crashlytics.sendCrashLog({
         message: 'Error authenticating user: ' + args.error,
         showInConsole: true
       });
